@@ -3,7 +3,8 @@
   padding: 0;
   box-sizing: border-box;
 }
-.btn{
+
+.btn {
   background-color: white;
   border-color: none;
 }
@@ -15,36 +16,32 @@
   height: 100vh;
   overflow: hidden;
 }
-.pop-up-image {
-  display: none;
-  
-}
-.custom-size{
-  height: 10px;
-  width: 20px;
-}
 
 .container {
-
+  z-index: 1;
   width: 80%;
   position: relative;
 }
 
+
 .images {
+  z-index: 1;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 20px;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .images img {
-  width: 24%;
-  height: 210px;
+  width: 22%;
+  height: 250px;
   object-fit: cover;
   border-radius: 10px;
   cursor: pointer;
 }
+
+
 
 .pop-up {
   display: none;
@@ -52,25 +49,52 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 24%;
-  height: 300px;
-  background-color: rgba(0, 0, 0, 0.7);
+  width: 50%;
+  height: auto; 
   justify-content: center;
   align-items: center;
+  text-align: center;
+  z-index: 1000;
+}
+.active{
+  opacity: 0;
+}
+.pop-up-image{
+ 
+ padding: 0px 5% 0px  5%;
+  margin: auto;
+  justify-content: space-between;
+  width: 100%;
+
   display: flex;
-
-
+  position: absolute;
+  top: 46%;
 }
 
-/* background-image{
-  height: 50%;
-} */
 
 .pop-up img {
-  width: 50%;
-  height: 50%;
-  object-fit: cover;
-  border-radius: 10px;
+  width:  83%; /* Ensures the image fits within the pop-up */
+  
+  object-fit: contain; /* Maintains the aspect ratio */
+  border-radius: 8px;
+} 
+.cross{
+
+
+  left: 100%;
+   
+    font-size: 5rem;
+    top: 0%;
+    position: absolute;
+  
+}
+
+.rightSwip{
+  font-size: 5em;
+}
+
+.leftSwip{
+  font-size: 5em;
 }
 
 @media (max-width: 1024px) {
@@ -79,9 +103,33 @@
   }
 
   .images img {
-    height: 180px;
-    width: 23%;
+    height: 244px;
+    width: 31%;
+}
+  
+
+  .pop-up {
+  
+    width: 50%;
+
   }
+  .pop-up img {
+    width: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+}
+.pop-up {
+  width: 60%;
+}
+.container {
+  z-index: 1;
+  width:75%;
+  position: relative;
+}
+.pop-up-image{
+  
+  padding: 0px 1% 0px 1%;
+}
 }
 
 @media (max-width: 768px) {
@@ -90,18 +138,128 @@
   }
 
   .images img {
-    height: 170px;
-    width: 30%;
+    height: 179px;
+    width: 31%;
   }
+ .cross{
+  
+    font-size: 3rem;
+    
+
+ }
+ .pop-up {
+  width: 60%;
+}
+.rightSwip{
+  font-size: 3em;
 }
 
-@media (max-width: 425px) {
-  .container {
-    width: 80%;
-  }
+.leftSwip{
+  font-size: 3em;
+}
+.container {
+  z-index: 1;
+  width: 85%;
+  position: relative;
+}
+.pop-up-image{
+  
+  padding: 0px 1% 0px 1%;
+}
+}
 
-  .images img {
-    width: 48%;
-    height: 120px;
+
+
+
+
+@media (max-width: 425px) {
+  .images{
+    gap: 10px;
   }
+  .images img {
+      height: 114px;
+      width: 48%;
+  }
+  .pop-up img {
+    width: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.rightSwip{
+  font-size: 2em;
+}
+
+.leftSwip{
+  font-size: 2em;
+}
+.pop-up-image{
+  top: 50%;
+}
+.pop-up {
+  width: 60%;
+}
+.pop-up-image{
+  
+  padding: 0px 1% 0px 1%;
+}
+}
+
+@media (max-width: 375px) {
+  .images{
+    gap: 10px;
+  }
+  .images img {
+      height: 114px;
+      width: 48%;
+  }
+  .pop-up img {
+    width: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.rightSwip{
+  font-size: 2em;
+}
+
+.leftSwip{
+  font-size: 2em;
+}
+.pop-up-image{
+  top: 50%;
+}
+.pop-up {
+  width: 60%;
+}
+}
+
+
+@media (max-width: 320px) {
+  .images{
+    gap: 10px;
+  }
+  .images img {
+      height: 114px;
+      width: 48%;
+  }
+  .pop-up img {
+    width: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.rightSwip{
+  font-size: 1.5em;
+}
+
+.leftSwip{
+  font-size: 1.5em;
+}
+.pop-up-image{
+  top: 50%;
+}
+.pop-up {
+  width: 60%;
+}
 }
