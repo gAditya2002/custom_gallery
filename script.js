@@ -8,12 +8,7 @@ const left_swipe_image = document.querySelector(".leftSift");
 const right_swipe_image = document.querySelector(".rightSift");
 let currentIndex = 0;
 
-// Insert images into the slider
-slider.innerHTML = '';
-images.forEach((img, index) => {
-    const imgElement = `<img src="${img.src}" class="slider-image" alt="Image ${index + 1}">`;
-    slider.innerHTML += imgElement;
-});
+
 
 if (closeButton) {
     closeButton.onclick = function() {
@@ -62,6 +57,11 @@ left_swipe_image.addEventListener("click", () => {
     }
 });
 
+slider.innerHTML = '';
+images.forEach((img, index) => {
+    const imgElement = `<img src="${img.src}" class="slider-image" alt="Image ${index + 1}">`;
+    slider.innerHTML += imgElement;
+});
 
 function updateSliderPosition() {
     slider.style.transform = `translateX(${currentIndex * -100}%)`;
