@@ -1,80 +1,112 @@
-const images = Array.from(document.querySelectorAll(".car-image"));
-const images_container = document.querySelector(".images");
-const popUp = document.querySelector(".pop-up");
-const popUpImage = popUp.querySelector("img");
-const active = document.querySelector(".active");
-const opacity = document.querySelector(".op");
-const cross = document.querySelector('.cross');
-const right_swip_image = document.querySelector(".rightSwip");
-const left_swipe_image = document.querySelector(".leftSwip");
-const clickDots = Array.from(document.querySelectorAll(".dot"));
+const images = document.querySelectorAll(".image");
+const modal = document.getElementById("imagePreviewModal");
+const slider = document.querySelector('.image-slider');
+const caption = document.querySelector(".image-caption");
+const dotsContainer = document.querySelector(".dots");
+const closeButton = document.querySelector(".close-button");
+const left_swipe_image = document.querySelector(".leftSift");
+const right_swipe_image = document.querySelector(".rightSift");
+let currentIndex = 0;
 
-let index_of_image = 0;
-let clickedImage;
-
-function handleClick(event) {
-  clickedImage = event.target;
-  index_of_image = images.indexOf(clickedImage);
-  popUpImage.src = clickedImage.src;
-  popUp.style.display = "flex";
-  active.classList.remove("active");
-  cross.classList.remove("active");
-  opacity.style.opacity = 0.5;
-  // updateDots();
-}
-
-function closePopUp() {
-  cross.classList.add("active");
-  active.classList.add("active");
-  opacity.style.opacity = 1;
-  popUp.style.display = "none";
-}
-
-cross.addEventListener("click", closePopUp);
-
-right_swip_image.addEventListener("click", () => {
-  index_of_image = (index_of_image + 1) % images.length;
-  changeImageWithSlide('right');
+// Insert images into the slider
+slider.innerHTML = '';
+images.forEach((img, index) => {
+    const imgElement = `<img src="${img.src}" class="slider-image" alt="Image ${index + 1}">`;
+    slider.innerHTML += imgElement;
 });
+
+if (closeButton) {
+    closeButton.onclick = function() {
+        modal.style.display = "none";
+    };
+}
+
+function toggleArrowsVisibility() {
+    if (currentIndex === 0) {
+        left_swipe_image.classList.add("disabled");
+    } else {
+        left_swipe_image.classList.remove("disabled");
+    }
+
+    if (currentIndex === images.length - 1) {
+        right_swipe_image.classList.add("disabled");
+    } else {
+        right_swipe_image.classList.remove("disabled");
+    }
+}
+
+modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+        modal.style.display = "none";
+    }
+});
+
+right_swipe_image.addEventListener("click", () => {
+    if (currentIndex < images.length - 1) {
+        currentIndex += 1;
+        updateSliderPosition();
+        updateDots();
+        updateCaption();
+        toggleArrowsVisibility();
+    }
+});
+
 
 left_swipe_image.addEventListener("click", () => {
-  index_of_image = (index_of_image - 1 + images.length) % images.length;
-  changeImageWithSlide('left');
+    if (currentIndex > 0) {
+        currentIndex -= 1;
+        updateSliderPosition();
+        updateDots();
+        updateCaption();
+        toggleArrowsVisibility();
+    }
 });
 
-clickDots.forEach(dot => {
-  dot.addEventListener("click", (e) => {
-    index_of_image = clickDots.indexOf(e.target);
-    changeImageWithSlide();
-  });
-});
+
+function updateSliderPosition() {
+    slider.style.transform = `translateX(${currentIndex * -100}%)`;
+}
 
 function updateDots() {
-  clickDots.forEach((dot, index) => {
-    dot.classList.remove("active");
-    if (index === index_of_image) {
-      dot.classList.add("active");
+    dotsContainer.innerHTML = '';
+    images.forEach((_, i) => {
+        const dot = document.createElement("span");
+        dot.classList.add("dot");
+        if (i === currentIndex) dot.classList.add("active");
+        dot.dataset.index = i;
+        dot.title = `Image ${i + 1}`;
+        dotsContainer.appendChild(dot);
+    });
+}
+
+function popupImage(index) {
+    currentIndex = index;
+    modal.style.display = "block";
+    updateSliderPosition();
+    updateDots();
+    updateCaption();
+    toggleArrowsVisibility();
+}
+
+for (let i = 0; i < images.length; i++) {
+    images[i].addEventListener("click", () => popupImage(i));
+}
+
+
+dotsContainer.addEventListener("click", (e) => {
+    if (e.target.classList.contains("dot")) {
+        currentIndex = parseInt(e.target.dataset.index);
+        updateSliderPosition();
+        updateDots();
+        updateCaption();
+        toggleArrowsVisibility();
     }
-  });
-}
-
-// function changeImageWithSlide(direction = '') {
-//   popUpImage.classList.add(`slide-${direction}`);
-//   const newImage = images[index_of_image];
-//   popUpImage.src = newImage.src;
-//   popUpImage.classList.remove(`slide-${direction}`);
-// }
-
-function changeImageWithSlide(direction = '') {
-  const newImage = images[index_of_image];
-  popUpImage.classList.add(`slide-${direction}`);
-  setTimeout(() => {
-    popUpImage.src = newImage.src;
-    popUpImage.classList.remove(`slide-${direction}`);
-  }, 500);
-}
-
-
-images.forEach(image => {
-  image.addEventListener("click", handleClick);
 });
+
+
+
+
+
+
+
+
